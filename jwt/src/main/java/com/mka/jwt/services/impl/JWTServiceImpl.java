@@ -27,6 +27,10 @@ public class JWTServiceImpl {
         return claimsResolvers.apply(claims);
     }
 
+    public String extractUserName(String token){
+        return extractClaim(token, Claims::getSubject);
+    }
+
     private Claims extractClaims(String token) {
         return  Jwts.parserBuilder().setSigningKey(getSignkey()).build().parseClaimsJws(token).getBody();
     }
