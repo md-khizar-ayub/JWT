@@ -21,14 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+
     @Autowired
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
     public ResponseEntity<User>  signUp(@RequestBody SignUpRequest signUpRequest){
         User user = authenticationService.signUP(signUpRequest);
-        logger.info("User Added Successfully : "+signUpRequest.toString());
         return ResponseEntity.ok(user);
     }
 

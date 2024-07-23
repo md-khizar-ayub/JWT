@@ -12,8 +12,3 @@ spring:
     properties:
       hibernate:
         format_sql: true
-logging:
-  file:
-    name: logs/log-${date:yyyy-MM-dd}.log
-  level:
-    root: INFO
