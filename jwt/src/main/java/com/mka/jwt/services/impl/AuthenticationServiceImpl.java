@@ -11,8 +11,10 @@ import com.mka.jwt.services.AuthenticationService;
 import com.mka.jwt.services.JWTService;
 import lombok.RequiredArgsConstructor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,12 +26,14 @@ import java.util.HashMap;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
     @Autowired
     private final UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private final AuthenticationManager   authenticationManager;
+
     private final JWTService jwtService ;
     @Override
     public User signUP(SignUpRequest signUpRequest){
@@ -55,6 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
        JwtAuthenticationResponse jwtAuthenticationResponse = new JwtAuthenticationResponse();
        jwtAuthenticationResponse.setToken(jwt);
        jwtAuthenticationResponse.setResfreshToken(refreshToken);
+        logger.info("Token "+jwtAuthenticationResponse.getToken());
         return jwtAuthenticationResponse;
     }
 
